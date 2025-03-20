@@ -18,14 +18,14 @@ public:
 	ATank();
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* playerInputComponent) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	void HandleDestruction();
 
-	APlayerController* GetTankPlayerController() const { return tankPlayerController; };
+	APlayerController* GetTankPlayerController() const { return TankPlayerController; };
 
 	bool bAlive{ true };
 
@@ -35,16 +35,16 @@ protected:
 
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	class USpringArmComponent* springArm;
+	class USpringArmComponent* SpringArm;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	class UCameraComponent* camera;
+	class UCameraComponent* Camera;
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
-	float movementSpeed = 250.f;
+	float MovementSpeed = 250.f;
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
-	float rotationSpeed = 75.f;
+	float RotationSpeed = 75.f;
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	float FireRate = 0.5f;
@@ -55,5 +55,5 @@ private:
 	void Turn(float value);
 	void Fire();
 
-	APlayerController* tankPlayerController;
+	APlayerController* TankPlayerController;
 };

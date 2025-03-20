@@ -25,37 +25,37 @@ public:
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	class UCapsuleComponent* capsuleComponent;
+	class UCapsuleComponent* CapsuleComponent;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Components")
-	UStaticMeshComponent* projectileMesh;
+	UStaticMeshComponent* ProjectileMesh;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	class UProjectileMovementComponent* movementComponent;
+	class UProjectileMovementComponent* MovementComponent;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	class UParticleSystemComponent* trailParticleEffect;
+	class UParticleSystemComponent* TrailParticleEffect;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Movement")
-	float initialSpeed{ 1.f };
+	float InitialSpeed{ 1.f };
 
 	UPROPERTY(EditDefaultsOnly, Category = "Movement")
-	float maxSpeed{ 5.f };
+	float MaxSpeed{ 5.f };
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
-	float damage{ 40.f };
+	float Damage{ 40.f };
 
 	UFUNCTION()
-	void OnHit(UPrimitiveComponent* hitComp, AActor* otherActor, UPrimitiveComponent* otherComp, FVector normalImpulse, const FHitResult& hit);
+	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
-	class UParticleSystem* hitParticleEffect;
+	class UParticleSystem* HitParticleEffect;
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
-	class USoundBase* launchSound;
+	class USoundBase* LaunchSound;
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
-	USoundBase* hitSound;
+	USoundBase* HitSound;
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TSubclassOf<class UCameraShakeBase> HitCameraShakeClass;

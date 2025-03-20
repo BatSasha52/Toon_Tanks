@@ -18,33 +18,33 @@ public:
 	void HandleDestruction();
 
 protected:
-	void RotateTurret(FVector lookAtTarget);
+	void RotateTurret(FVector LookAtTarget);
 	void Fire();
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	class UCapsuleComponent* capsuleComponent;
+	class UCapsuleComponent* CapsuleComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* baseMesh;
+	UStaticMeshComponent* BaseMesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* turretMesh;
+	UStaticMeshComponent* TurretMesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	USceneComponent* projectileSpawnPoint;
+	USceneComponent* ProjectileSpawnPoint;
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
-	float turretSpeed{ 4.f };
+	float TurretSpeed{ 4.f };
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	TSubclassOf<class AProjectile> ProjectileClass;
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
-	class UParticleSystem* deathParticleEffect;
+	class UParticleSystem* DeathParticleEffect;
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
-	class USoundBase* deathSound;
+	class USoundBase* DeathSound;
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TSubclassOf<class UCameraShakeBase> DeathCameraShakeClass;

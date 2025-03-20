@@ -22,13 +22,13 @@ protected:
 
 private:
 	UPROPERTY(EditAnywhere)
-	float maxHealth{ 100.f };
-	float health{ 0.f };
+	float MaxHealth{ 100.f };
+	float Health{ 0.f };
 
 	UFUNCTION()
-	void DamageTaken(AActor* damagedActor, float damage, const UDamageType* damageType, class AController* instigator, AActor* damageCauser);
+	void DamageTaken(AActor* DamagedActor, float Damage, const UDamageType* DamageType, class AController* Instigator, AActor* DamageCauser);
 
-	class AToonTanksGameMode* toonTanksGameMode;
+	class AToonTanksGameMode* ToonTanksGameMode;
 
 public:	
 	// Called every frame

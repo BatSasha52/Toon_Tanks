@@ -16,16 +16,16 @@ AProjectile::AProjectile()
 	//capsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
 	//RootComponent = capsuleComponent;
 
-	projectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
-	RootComponent = projectileMesh;
+	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
+	RootComponent = ProjectileMesh;
 	
 
-	trailParticleEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Smoke trail"));
-	trailParticleEffect->SetupAttachment(RootComponent);
+	TrailParticleEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Smoke trail"));
+	TrailParticleEffect->SetupAttachment(RootComponent);
 
-	movementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
-	movementComponent->MaxSpeed = maxSpeed;
-	movementComponent->InitialSpeed = initialSpeed;
+	MovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
+	MovementComponent->MaxSpeed = MaxSpeed;
+	MovementComponent->InitialSpeed = InitialSpeed;
 
 }
 
@@ -34,10 +34,10 @@ void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	projectileMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
+	ProjectileMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 
-	if (launchSound) {
-		UGameplayStatics::PlaySoundAtLocation(this, launchSound, GetActorLocation());
+	if (LaunchSound) {
+		UGameplayStatics::PlaySoundAtLocation(this, LaunchSound, GetActorLocation());
 	}
 }
 
@@ -48,25 +48,25 @@ void AProjectile::Tick(float DeltaTime)
 
 }
 
-void AProjectile::OnHit(UPrimitiveComponent* hitComp, AActor* otherActor, UPrimitiveComponent* otherComp, FVector normalImpulse, const FHitResult& hit)
+void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& hit)
 {
-	AActor* myOwner = GetOwner();
-	if (myOwner == nullptr) {
+	AActor* MyOwner = GetOwner();
+	if (MyOwner == nullptr) {
 		Destroy();
 		return;
 	}
 	
-	AController* myOwnerInstigator = myOwner->GetInstigatorController();
-	UClass* damageTypeClass = UDamageType::StaticClass();
-	if (myOwnerInstigator && otherActor != this && otherActor != myOwner) {
-		UGameplayStatics::ApplyDamage(otherActor, damage, myOwnerInstigator, this, damageTypeClass);
+	AController* MyOwnerInstigator = MyOwner->GetInstigatorController();
+	UClass* DamageTypeClass = UDamageType::StaticClass();
+	if (MyOwnerInstigator && OtherActor != this && OtherActor != MyOwner) {
+		UGameplayStatics::ApplyDamage(OtherActor, Damage, MyOwnerInstigator, this, DamageTypeClass);
 
-		if (hitParticleEffect) {
-			UGameplayStatics::SpawnEmitterAtLocation(this, hitParticleEffect, GetActorLocation(), GetActorRotation());
+		if (HitParticleEffect) {
+			UGameplayStatics::SpawnEmitterAtLocation(this, HitParticleEffect, GetActorLocation(), GetActorRotation());
 		}
 
-		if (hitSound) {
-		UGameplayStatics::PlaySoundAtLocation(this, hitSound, GetActorLocation());
+		if (HitSound) {
+		UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
 		}
 
 		if (HitCameraShakeClass) {

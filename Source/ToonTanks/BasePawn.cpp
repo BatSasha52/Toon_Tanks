@@ -12,27 +12,27 @@ ABasePawn::ABasePawn()
 {
 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	capsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
-	RootComponent = capsuleComponent;
+	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
+	RootComponent = CapsuleComponent;
 
-	baseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
-	baseMesh->SetupAttachment(capsuleComponent);
+	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
+	BaseMesh->SetupAttachment(CapsuleComponent);
 
-	turretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Turret Mesh"));
-	turretMesh->SetupAttachment(baseMesh);
+	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Turret Mesh"));
+	TurretMesh->SetupAttachment(BaseMesh);
 
-	projectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Shoot Point"));
-	projectileSpawnPoint->SetupAttachment(turretMesh);
+	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Shoot Point"));
+	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
 }
 
 void ABasePawn::HandleDestruction()
 {
-	if (deathParticleEffect) {
-		UGameplayStatics::SpawnEmitterAtLocation(this, deathParticleEffect, GetActorLocation(), GetActorRotation());
+	if (DeathParticleEffect) {
+		UGameplayStatics::SpawnEmitterAtLocation(this, DeathParticleEffect, GetActorLocation(), GetActorRotation());
 	}
 
-	if (deathSound) {
-		UGameplayStatics::PlaySoundAtLocation(this, deathSound, GetActorLocation());
+	if (DeathSound) {
+		UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation());
 	}
 
 	if (DeathCameraShakeClass) {
@@ -40,21 +40,21 @@ void ABasePawn::HandleDestruction()
 	}
 }
 
-void ABasePawn::RotateTurret(FVector lookAtTarget)
+void ABasePawn::RotateTurret(FVector LookAtTarget)
 {
-	FVector toTarget = lookAtTarget - turretMesh->GetComponentLocation();
-	FRotator lookAtRotation = FRotator(0.f, toTarget.Rotation().Yaw, 0.f);
-	turretMesh->SetWorldRotation(
-		FMath::RInterpTo(turretMesh->GetComponentRotation(), 
-			lookAtRotation, 
+	FVector ToTarget = LookAtTarget - TurretMesh->GetComponentLocation();
+	FRotator LookAtRotation = FRotator(0.f, ToTarget.Rotation().Yaw, 0.f);
+	TurretMesh->SetWorldRotation(
+		FMath::RInterpTo(TurretMesh->GetComponentRotation(), 
+			LookAtRotation, 
 			UGameplayStatics::GetWorldDeltaSeconds(this), 
-			turretSpeed));
+			TurretSpeed));
 }
 
 void ABasePawn::Fire()
 {
-	FVector projectileLocation = projectileSpawnPoint->GetComponentLocation();
-	FRotator projectileRotation = projectileSpawnPoint->GetComponentRotation();
-	AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, projectileLocation, projectileRotation);
-	projectile->SetOwner(this);
+	FVector ProjectileLocation = ProjectileSpawnPoint->GetComponentLocation();
+	FRotator ProjectileRotation = ProjectileSpawnPoint->GetComponentRotation();
+	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, ProjectileLocation, ProjectileRotation);
+	Projectile->SetOwner(this);
 }

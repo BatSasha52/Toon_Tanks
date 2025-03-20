@@ -24,15 +24,15 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	class ATank* tank;
+	class ATank* Tank;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
-	float fireRange{ 700 };
+	float FireRange{ 700 };
 
-	FTimerHandle fireRateTimerHandle;
+	FTimerHandle FireRateTimerHandle;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
-	float fireRate{ 2.f };
+	float FireRate{ 2.f };
 	void CheckFireCondition();
 	bool IsTankInRange();
 };

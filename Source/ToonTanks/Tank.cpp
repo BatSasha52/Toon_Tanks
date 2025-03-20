@@ -8,11 +8,11 @@
 
 ATank::ATank()
 {
-	springArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm"));
-	springArm->SetupAttachment(RootComponent);
+	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm"));
+	SpringArm->SetupAttachment(RootComponent);
 
-	camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-	camera->SetupAttachment(springArm);
+	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	Camera->SetupAttachment(SpringArm);
 	
 }
 
@@ -31,15 +31,15 @@ void ATank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (tankPlayerController)
+	if (TankPlayerController)
 	{
-		FHitResult hitResult;
-		tankPlayerController->GetHitResultUnderCursor(
+		FHitResult HitResult;
+		TankPlayerController->GetHitResultUnderCursor(
 			ECollisionChannel::ECC_Visibility,
 			false,
-			hitResult);
+			HitResult);
 
-		RotateTurret(hitResult.ImpactPoint);
+		RotateTurret(HitResult.ImpactPoint);
 	}
 
 }
@@ -57,23 +57,23 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 
-	tankPlayerController = Cast<APlayerController>(GetController());
+	TankPlayerController = Cast<APlayerController>(GetController());
 }
 
-void ATank::Move(float value)
+void ATank::Move(float Value)
 {
 	//UE_LOG(LogTemp, Display, TEXT("%f"), value);
 
-	FVector deltaLocation(0.f);
-	deltaLocation.X = value * movementSpeed * UGameplayStatics::GetWorldDeltaSeconds(this);
-	AddActorLocalOffset(deltaLocation, true);
+	FVector DeltaLocation(0.f);
+	DeltaLocation.X = Value * MovementSpeed * UGameplayStatics::GetWorldDeltaSeconds(this);
+	AddActorLocalOffset(DeltaLocation, true);
 }
 
-void ATank::Turn(float value)
+void ATank::Turn(float Value)
 {
-	FRotator deltaRotation = FRotator::ZeroRotator;
-	deltaRotation.Yaw = value * rotationSpeed * UGameplayStatics::GetWorldDeltaSeconds(this);
-	AddActorLocalRotation(deltaRotation, true);
+	FRotator DeltaRotation = FRotator::ZeroRotator;
+	DeltaRotation.Yaw = Value * RotationSpeed * UGameplayStatics::GetWorldDeltaSeconds(this);
+	AddActorLocalRotation(DeltaRotation, true);
 }
 
 void ATank::Fire()

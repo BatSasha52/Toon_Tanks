@@ -16,7 +16,7 @@ class TOONTANKS_API AToonTanksGameMode : public AGameModeBase
 	
 
 public:
-	void ActorDied(AActor* deadActor);
+	void ActorDied(AActor* DeadActor);
 
 protected:
 	virtual void BeginPlay() override;
@@ -28,12 +28,12 @@ protected:
 	void GameOver(bool bWonGame);
 
 private:
-	class ATank* tank;
-	class AToonTanksPlayerController* toonTanksPlayerController;
+	class ATank* Tank;
+	class AToonTanksPlayerController* ToonTanksPlayerController;
 
-	float startDelay{ 3.f };
+	float StartDelay{ 3.f };
 	void HandleGameStart();
 
-	int32 towersCount{0};
+	int32 TowersCount{0};
 	int32 GetTowersCount();
 };
